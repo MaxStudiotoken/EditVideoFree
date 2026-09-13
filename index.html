@@ -18,6 +18,9 @@
             --text-muted: #a0a0b0;
             --gradient: linear-gradient(135deg, #7b2cbf, #00b4d8);
             --glass-border: rgba(255, 255, 255, 0.1);
+            --facebook: #1877F2;
+            --instagram: #E4405F;
+            --x-color: #ffffff;
         }
 
         * {
@@ -66,6 +69,8 @@
             backdrop-filter: blur(10px);
             z-index: 1000;
             border-bottom: 1px solid var(--glass-border);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .logo-container {
@@ -76,7 +81,7 @@
         }
 
         .logo-img {
-            height: 40px; /* Ajusta el tamaño del logo aquí */
+            height: 40px;
             width: auto;
         }
 
@@ -86,6 +91,42 @@
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        /* --- SELECTOR DE IDIOMAS --- */
+        .lang-selector {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 5px;
+            padding: 5px 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+
+        .lang-btn:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .lang-btn.active {
+            opacity: 1;
+            border-color: var(--secondary);
+            background: rgba(0, 180, 216, 0.2);
+            box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
         }
 
         .nav-links {
@@ -110,6 +151,7 @@
             text-decoration: none;
             color: white;
             transition: transform 0.3s, box-shadow 0.3s;
+            white-space: nowrap;
         }
 
         .btn-nav:hover {
@@ -121,15 +163,14 @@
         .hero {
             min-height: 100vh;
             display: flex;
-            flex-direction: column; /* Cambiado a columna para el banner */
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 120px 5% 50px;
+            padding: 140px 5% 50px;
             position: relative;
             text-align: center;
         }
 
-        /* Aquí integramos tu banner */
         .hero-banner {
             width: 100%;
             max-width: 1000px;
@@ -186,6 +227,7 @@
             display: flex;
             gap: 20px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn-primary {
@@ -199,6 +241,10 @@
             transition: all 0.3s;
             border: none;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .btn-primary:hover {
@@ -326,16 +372,27 @@
             color: var(--text-main);
             text-decoration: none;
             font-size: 1.5rem;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
         }
 
-        .social-links a:hover { color: var(--secondary); }
+        .social-links a:hover { transform: scale(1.2); }
+        .social-links a.fb:hover { color: var(--facebook); border-color: var(--facebook); }
+        .social-links a.ig:hover { color: var(--instagram); border-color: var(--instagram); }
+        .social-links a.x:hover { color: var(--x-color); border-color: var(--x-color); }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 968px) {
             .hero-title { font-size: 3rem; }
             .nav-links { display: none; }
             .hero-banner { max-width: 100%; }
+            .lang-selector { margin-right: 0; }
         }
 
         @media (max-width: 480px) {
@@ -344,6 +401,8 @@
             .btn-primary, .btn-secondary { width: 100%; text-align: center; }
             .logo-text { font-size: 1.2rem; }
             .logo-img { height: 30px; }
+            nav { justify-content: center; }
+            .lang-selector { margin: 0; }
         }
     </style>
 </head>
@@ -355,20 +414,28 @@
     <!-- Navegación -->
     <nav>
         <a href="#" class="logo-container">
-            <!-- Aquí va tu logo -->
             <img src="logo_edit.png" alt="Logo VideoEditor" class="logo-img">
             <span class="logo-text">VideoEditor</span>
         </a>
-        <div class="nav-links">
-            <a href="#features">Características</a>
-            <a href="#stats">Comunidad</a>
+
+        <!-- SELECTOR DE IDIOMAS CON BANDERAS -->
+        <div class="lang-selector">
+            <button class="lang-btn active" onclick="changeLang('es', event)" title="Español">🇪🇸</button>
+            <button class="lang-btn" onclick="changeLang('en', event)" title="English">🇬🇧</button>
+            <button class="lang-btn" onclick="changeLang('fr', event)" title="Français">🇫🇷</button>
+            <button class="lang-btn" onclick="changeLang('zh', event)" title="中文">🇨🇳</button>
+            <button class="lang-btn" onclick="changeLang('ru', event)" title="Русский">🇷🇺</button>
+            <button class="lang-btn" onclick="changeLang('pt', event)" title="Português (BR)">🇧🇷</button>
         </div>
-        <a href="#" class="btn-nav">Descargar Gratis</a>
+
+        <div class="nav-links">
+            <a href="#features" data-i18n="nav_features">Características</a>
+        </div>
+        <a href="#comprar" class="btn-nav" data-i18n="nav_download">Descargar Gratis</a>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <!-- Aquí va tu banner -->
         <div class="hero-banner">
             <img src="barnet-edit.png" alt="Video Editor Banner - Crea, Edita y Comparte">
         </div>
@@ -376,49 +443,49 @@
         <div class="hero-content">
             <h1 class="hero-title">VIDEO <span>EDITOR</span></h1>
             <p class="hero-subtitle">
-                <em>Turn your ideas into amazing videos.</em><br>
-                Crea, edita y comparte. La herramienta más potente y sencilla para todos.
+                <em data-i18n="hero_slogan">Turn your ideas into amazing videos.</em><br>
+                <span data-i18n="hero_desc">Crea, edita y comparte. La herramienta más potente y sencilla para todos.</span>
             </p>
             <div class="cta-group">
-                <button class="btn-primary">Descargar Ahora</button>
-                <button class="btn-secondary">Ver Demo</button>
+                <a href="#comprar" class="btn-primary" data-i18n="btn_download">Descargar Ahora</a>
+                <button class="btn-secondary" data-i18n="btn_demo">Ver Demo</button>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
     <section class="features" id="features">
-        <h2 class="section-title">Todo lo que necesitas, <span>100% Gratis</span></h2>
+        <h2 class="section-title" data-i18n="features_title">Todo lo que necesitas, <span>100% Gratis</span></h2>
         <div class="grid-features">
             <div class="feature-card">
                 <div class="feature-icon">✂️</div>
-                <h3>Trim & Cut</h3>
-                <p>Corta y recorta tus videos con precisión milimétrica. Sin marcas de agua.</p>
+                <h3 data-i18n="feat1_title">Trim & Cut</h3>
+                <p data-i18n="feat1_desc">Corta y recorta tus videos con precisión milimétrica. Sin marcas de agua.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🎵</div>
-                <h3>Música y Audio</h3>
-                <p>Añade pistas de audio, efectos de sonido y sincroniza todo perfectamente.</p>
+                <h3 data-i18n="feat2_title">Música y Audio</h3>
+                <p data-i18n="feat2_desc">Añade pistas de audio, efectos de sonido y sincroniza todo perfectamente.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">T</div>
-                <h3>Texto y Títulos</h3>
-                <p>Personaliza tus videos con increíbles fuentes, colores y animaciones de texto.</p>
+                <h3 data-i18n="feat3_title">Texto y Títulos</h3>
+                <p data-i18n="feat3_desc">Personaliza tus videos con increíbles fuentes, colores y animaciones de texto.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">⚡</div>
-                <h3>Filtros y Efectos</h3>
-                <p>Dale vida a tus clips con filtros profesionales y transiciones creativas.</p>
+                <h3 data-i18n="feat4_title">Filtros y Efectos</h3>
+                <p data-i18n="feat4_desc">Dale vida a tus clips con filtros profesionales y transiciones creativas.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🚀</div>
-                <h3>Velocidad</h3>
-                <p>Acelera o ralentiza tus videos para crear momentos épicos o cámara lenta.</p>
+                <h3 data-i18n="feat5_title">Velocidad</h3>
+                <p data-i18n="feat5_desc">Acelera o ralentiza tus videos para crear momentos épicos o cámara lenta.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📐</div>
-                <h3>Recorte y Formato</h3>
-                <p>Ajusta la relación de aspecto para TikTok, Instagram, YouTube o cine.</p>
+                <h3 data-i18n="feat6_title">Recorte y Formato</h3>
+                <p data-i18n="feat6_desc">Ajusta la relación de aspecto para TikTok, Instagram, YouTube o cine.</p>
             </div>
         </div>
     </section>
@@ -427,47 +494,296 @@
     <section class="stats" id="stats">
         <div class="stat-item">
             <h2>10M+</h2>
-            <p>Descargas</p>
+            <p data-i18n="stat1">Descargas</p>
         </div>
         <div class="stat-item">
             <h2>4.9★</h2>
-            <p>Valoración Media</p>
+            <p data-i18n="stat2">Valoración Media</p>
         </div>
         <div class="stat-item">
             <h2>100%</h2>
-            <p>Gratis para Siempre</p>
+            <p data-i18n="stat3">Gratis para Siempre</p>
         </div>
         <div class="stat-item">
             <h2>4K</h2>
-            <p>Soporte HD y Ultra HD</p>
+            <p data-i18n="stat4">Soporte HD y Ultra HD</p>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE COMPRA / CONTACTO (Facebook, Instagram y X) -->
+    <section class="features" id="comprar" style="padding-top: 50px;">
+        <h2 class="section-title" data-i18n="buy_title">¿Listo para <span>comprar o contactar?</span></h2>
+        <p style="color: var(--text-muted); margin-bottom: 40px; font-size: 1.1rem; max-width: 700px; margin-left: auto; margin-right: auto;" data-i18n="buy_desc">
+            Escríbenos por nuestras redes sociales para adquirir la versión completa o resolver tus dudas.
+        </p>
+        
+        <div class="cta-group">
+            <!-- Facebook -->
+            <!-- CAMBIA EL ENLACE DE ABAJO POR TU PÁGINA DE FACEBOOK -->
+            <a href="https://facebook.com/TuPaginaDeFacebook" target="_blank" class="btn-primary" style="background: var(--facebook);">
+                <span>📘</span> <span data-i18n="buy_fb">Facebook</span>
+            </a>
+
+            <!-- Instagram -->
+            <!-- CAMBIA EL ENLACE DE ABAJO POR TU PERFIL DE INSTAGRAM -->
+            <a href="https://instagram.com/TuPerfilDeInstagram" target="_blank" class="btn-primary" style="background: var(--instagram);">
+                <span>📸</span> <span data-i18n="buy_ig">Instagram</span>
+            </a>
+
+            <!-- X (Twitter) -->
+            <!-- CAMBIA EL ENLACE DE ABAJO POR TU PERFIL DE X -->
+            <a href="https://x.com/TuPerfilDeX" target="_blank" class="btn-primary" style="background: #000000; border: 1px solid #ffffff;">
+                <span>𝕏</span> <span data-i18n="buy_x">X (Twitter)</span>
+            </a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 VideoEditor Pro. Crea, Edita y Comparte. Todo es gratis.</p>
+        <p data-i18n="footer_text">&copy; 2024 VideoEditor Pro. Crea, Edita y Comparte. Todo es gratis.</p>
         <div class="social-links">
-            <a href="#">📱</a>
-            <a href="#">🐦</a>
-            <a href="#">📸</a>
-            <a href="#">▶️</a>
+            <a href="https://facebook.com/TuPaginaDeFacebook" target="_blank" class="fb" title="Facebook">📘</a>
+            <a href="https://instagram.com/TuPerfilDeInstagram" target="_blank" class="ig" title="Instagram">📸</a>
+            <a href="https://x.com/TuPerfilDeX" target="_blank" class="x" title="X (Twitter)">𝕏</a>
         </div>
     </footer>
 
     <script>
-        // Efecto de scroll suave
+        // --- DICCIONARIO DE TRADUCCIONES ---
+        const translations = {
+            es: {
+                nav_features: "Características",
+                nav_download: "Descargar Gratis",
+                hero_slogan: "Turn your ideas into amazing videos.",
+                hero_desc: "Crea, edita y comparte. La herramienta más potente y sencilla para todos.",
+                btn_download: "Descargar Ahora",
+                btn_demo: "Ver Demo",
+                features_title: "Todo lo que necesitas, <span>100% Gratis</span>",
+                feat1_title: "Trim & Cut",
+                feat1_desc: "Corta y recorta tus videos con precisión milimétrica. Sin marcas de agua.",
+                feat2_title: "Música y Audio",
+                feat2_desc: "Añade pistas de audio, efectos de sonido y sincroniza todo perfectamente.",
+                feat3_title: "Texto y Títulos",
+                feat3_desc: "Personaliza tus videos con increíbles fuentes, colores y animaciones de texto.",
+                feat4_title: "Filtros y Efectos",
+                feat4_desc: "Dale vida a tus clips con filtros profesionales y transiciones creativas.",
+                feat5_title: "Velocidad",
+                feat5_desc: "Acelera o ralentiza tus videos para crear momentos épicos o cámara lenta.",
+                feat6_title: "Recorte y Formato",
+                feat6_desc: "Ajusta la relación de aspecto para TikTok, Instagram, YouTube o cine.",
+                stat1: "Descargas",
+                stat2: "Valoración Media",
+                stat3: "Gratis para Siempre",
+                stat4: "Soporte HD y Ultra HD",
+                buy_title: "¿Listo para <span>comprar o contactar?</span>",
+                buy_desc: "Escríbenos por nuestras redes sociales para adquirir la versión completa o resolver tus dudas.",
+                buy_fb: "Facebook",
+                buy_ig: "Instagram",
+                buy_x: "X (Twitter)",
+                footer_text: "&copy; 2024 VideoEditor Pro. Crea, Edita y Comparte. Todo es gratis."
+            },
+            en: {
+                nav_features: "Features",
+                nav_download: "Download Free",
+                hero_slogan: "Turn your ideas into amazing videos.",
+                hero_desc: "Create, edit, and share. The most powerful and simple tool for everyone.",
+                btn_download: "Download Now",
+                btn_demo: "Watch Demo",
+                features_title: "Everything you need, <span>100% Free</span>",
+                feat1_title: "Trim & Cut",
+                feat1_desc: "Cut and trim your videos with millimeter precision. No watermarks.",
+                feat2_title: "Music & Audio",
+                feat2_desc: "Add audio tracks, sound effects, and sync everything perfectly.",
+                feat3_title: "Text & Titles",
+                feat3_desc: "Customize your videos with amazing fonts, colors, and text animations.",
+                feat4_title: "Filters & Effects",
+                feat4_desc: "Bring your clips to life with professional filters and creative transitions.",
+                feat5_title: "Speed",
+                feat5_desc: "Speed up or slow down your videos to create epic moments or slow motion.",
+                feat6_title: "Crop & Format",
+                feat6_desc: "Adjust the aspect ratio for TikTok, Instagram, YouTube, or cinema.",
+                stat1: "Downloads",
+                stat2: "Average Rating",
+                stat3: "Free Forever",
+                stat4: "HD & Ultra HD Support",
+                buy_title: "Ready to <span>buy or contact?</span>",
+                buy_desc: "Message us on our social media to get the full version or ask your questions.",
+                buy_fb: "Facebook",
+                buy_ig: "Instagram",
+                buy_x: "X (Twitter)",
+                footer_text: "&copy; 2024 VideoEditor Pro. Create, Edit, Share. Everything is free."
+            },
+            fr: {
+                nav_features: "Caractéristiques",
+                nav_download: "Télécharger Gratuit",
+                hero_slogan: "Turn your ideas into amazing videos.",
+                hero_desc: "Créez, éditez et partagez. L'outil le plus puissant et le plus simple pour tous.",
+                btn_download: "Télécharger",
+                btn_demo: "Voir la Démo",
+                features_title: "Tout ce dont vous avez besoin, <span>100% Gratuit</span>",
+                feat1_title: "Couper & Rogner",
+                feat1_desc: "Coupez et rognez vos vidéos avec une précision millimétrique. Sans filigrane.",
+                feat2_title: "Musique & Audio",
+                feat2_desc: "Ajoutez des pistes audio, des effets sonores et synchronisez tout parfaitement.",
+                feat3_title: "Texte & Titres",
+                feat3_desc: "Personnalisez vos vidéos avec des polices, des couleurs et des animations incroyables.",
+                feat4_title: "Filtres & Effets",
+                feat4_desc: "Donnez vie à vos clips avec des filtres professionnels et des transitions créatives.",
+                feat5_title: "Vitesse",
+                feat5_desc: "Accélérez ou ralentissez vos vidéos pour créer des moments épiques ou au ralenti.",
+                feat6_title: "Recadrage & Format",
+                feat6_desc: "Ajustez le rapport d'aspect pour TikTok, Instagram, YouTube ou le cinéma.",
+                stat1: "Téléchargements",
+                stat2: "Note Moyenne",
+                stat3: "Gratuit pour Toujours",
+                stat4: "Support HD & Ultra HD",
+                buy_title: "Prêt à <span>acheter ou contacter ?</span>",
+                buy_desc: "Écrivez-nous sur nos réseaux sociaux pour obtenir la version complète ou poser vos questions.",
+                buy_fb: "Facebook",
+                buy_ig: "Instagram",
+                buy_x: "X (Twitter)",
+                footer_text: "&copy; 2024 VideoEditor Pro. Créez, Éditez, Partagez. Tout est gratuit."
+            },
+            zh: {
+                nav_features: "功能",
+                nav_download: "免费下载",
+                hero_slogan: "Turn your ideas into amazing videos.",
+                hero_desc: "创作、编辑和分享。为所有人打造的最强大、最简单的工具。",
+                btn_download: "立即下载",
+                btn_demo: "观看演示",
+                features_title: "你需要的一切，<span>100% 免费</span>",
+                feat1_title: "裁剪与修剪",
+                feat1_desc: "以毫米级精度剪切和修剪视频。无水印。",
+                feat2_title: "音乐与音频",
+                feat2_desc: "添加音轨、音效，并完美同步一切。",
+                feat3_title: "文字与标题",
+                feat3_desc: "用炫酷的字体、颜色和文字动画个性化你的视频。",
+                feat4_title: "滤镜与特效",
+                feat4_desc: "通过各种专业滤镜和创意转场，让你的片段栩栩如生。",
+                feat5_title: "速度",
+                feat5_desc: "加速或减慢视频速度，创造史诗时刻或慢动作。",
+                feat6_title: "裁剪与格式",
+                feat6_desc: "为 TikTok、Instagram、YouTube 或电影调整宽高比。",
+                stat1: "下载量",
+                stat2: "平均评分",
+                stat3: "永久免费",
+                stat4: "支持高清与超高清",
+                buy_title: "准备<span>购买或联系？</span>",
+                buy_desc: "通过我们的社交媒体联系我们，获取完整版或解答您的疑问。",
+                buy_fb: "Facebook",
+                buy_ig: "Instagram",
+                buy_x: "X (Twitter)",
+                footer_text: "&copy; 2024 VideoEditor Pro. 创作、编辑、分享。一切免费。"
+            },
+            ru: {
+                nav_features: "Функции",
+                nav_download: "Скачать Бесплатно",
+                hero_slogan: "Turn your ideas into amazing videos.",
+                hero_desc: "Создавайте, редактируйте и делитесь. Самый мощный и простой инструмент для всех.",
+                btn_download: "Скачать Сейчас",
+                btn_demo: "Смотреть Демо",
+                features_title: "Все, что вам нужно, <span>100% Бесплатно</span>",
+                feat1_title: "Обрезка и Резка",
+                feat1_desc: "Режьте и обрезайте видео с миллиметровой точностью. Без водяных знаков.",
+                feat2_title: "Музыка и Аудио",
+                feat2_desc: "Добавляйте звуковые дорожки, эффекты и идеально синхронизируйте все.",
+                feat3_title: "Текст и Заголовки",
+                feat3_desc: "Персонализируйте видео с помощью классных шрифтов, цветов и анимаций.",
+                feat4_title: "Фильтры и Эффекты",
+                feat4_desc: "Оживите клипы с помощью профессиональных фильтров и креативных переходов.",
+                feat5_title: "Скорость",
+                feat5_desc: "Ускоряйте или замедляйте видео для создания эпических моментов или слоу-мо.",
+                feat6_title: "Обрезка и Формат",
+                feat6_desc: "Настройте соотношение сторон для TikTok, Instagram, YouTube или кино.",
+                stat1: "Загрузок",
+                stat2: "Средний Рейтинг",
+                stat3: "Бесплатно Навсегда",
+                stat4: "Поддержка HD и Ultra HD",
+                buy_title: "Готовы <span>купить или связаться?</span>",
+                buy_desc: "Напишите нам в социальных сетях, чтобы получить полную версию или задать вопросы.",
+                buy_fb: "Facebook",
+                buy_ig: "Instagram",
+                buy_x: "X (Twitter)",
+                footer_text: "&copy; 2024 VideoEditor Pro. Создавай, Редактируй, Делись. Все бесплатно."
+            },
+            pt: {
+                nav_features: "Recursos",
+                nav_download: "Baixar Grátis",
+                hero_slogan: "Turn your ideas into amazing videos.",
+                hero_desc: "Crie, edite e compartilhe. A ferramenta mais poderosa e simples para todos.",
+                btn_download: "Baixar Agora",
+                btn_demo: "Ver Demo",
+                features_title: "Tudo o que você precisa, <span>100% Grátis</span>",
+                feat1_title: "Cortar & Aparar",
+                feat1_desc: "Corte e apare seus vídeos com precisão milimétrica. Sem marca d'água.",
+                feat2_title: "Música & Áudio",
+                feat2_desc: "Adicione faixas de áudio, efeitos sonoros e sincronize tudo perfeitamente.",
+                feat3_title: "Texto & Títulos",
+                feat3_desc: "Personalize seus vídeos com fontes incríveis, cores e animações de texto.",
+                feat4_title: "Filtros & Efeitos",
+                feat4_desc: "Dê vida aos seus clipes com filtros profissionais e transições criativas.",
+                feat5_title: "Velocidade",
+                feat5_desc: "Acelere ou desacelere seus vídeos para criar momentos épicos ou câmera lenta.",
+                feat6_title: "Corte & Formato",
+                feat6_desc: "Ajuste a proporção para TikTok, Instagram, YouTube ou cinema.",
+                stat1: "Downloads",
+                stat2: "Avaliação Média",
+                stat3: "Grátis para Sempre",
+                stat4: "Suporte HD & Ultra HD",
+                buy_title: "Pronto para <span>comprar ou contatar?</span>",
+                buy_desc: "Envie-nos uma mensagem nas redes sociais para obter a versão completa ou tirar dúvidas.",
+                buy_fb: "Facebook",
+                buy_ig: "Instagram",
+                buy_x: "X (Twitter)",
+                footer_text: "&copy; 2024 VideoEditor Pro. Crie, Edite, Compartilhe. Tudo é grátis."
+            }
+        };
+
+        // --- FUNCIÓN PARA CAMBIAR EL IDIOMA ---
+        function changeLang(lang, event) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                const btn = document.querySelector(`.lang-btn[onclick*="'${lang}'"]`);
+                if (btn) btn.classList.add('active');
+            }
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    if (translations[lang][key].includes('<span>')) {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            localStorage.setItem('preferredLang', lang);
+        }
+
+        // --- INICIALIZACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLang');
+            if (savedLang && translations[savedLang]) {
+                changeLang(savedLang, null);
+            }
+        });
+
+        // --- EFECTOS DE SCROLL ---
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
 
-        // Efecto de aparición al hacer scroll
         const observerOptions = { threshold: 0.1 };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
