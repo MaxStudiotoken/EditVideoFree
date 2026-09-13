@@ -58,7 +58,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 20px 5%;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -68,18 +68,25 @@
             border-bottom: 1px solid var(--glass-border);
         }
 
-        .logo {
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 40px; /* Ajusta el tamaño del logo aquí */
+            width: auto;
+        }
+
+        .logo-text {
             font-size: 1.5rem;
             font-weight: 800;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
-        .logo span { color: var(--text-main); -webkit-text-fill-color: var(--text-main); }
 
         .nav-links {
             display: flex;
@@ -114,20 +121,44 @@
         .hero {
             min-height: 100vh;
             display: flex;
+            flex-direction: column; /* Cambiado a columna para el banner */
             align-items: center;
-            justify-content: space-between;
-            padding: 100px 5% 50px;
+            justify-content: center;
+            padding: 120px 5% 50px;
             position: relative;
+            text-align: center;
+        }
+
+        /* Aquí integramos tu banner */
+        .hero-banner {
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(123, 44, 191, 0.4);
+            border: 2px solid var(--glass-border);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .hero-content {
-            flex: 1;
-            max-width: 600px;
+            max-width: 800px;
             z-index: 2;
         }
 
         .hero-title {
-            font-size: 4.5rem;
+            font-size: 4rem;
             line-height: 1.1;
             font-weight: 800;
             margin-bottom: 20px;
@@ -154,6 +185,7 @@
         .cta-group {
             display: flex;
             gap: 20px;
+            justify-content: center;
         }
 
         .btn-primary {
@@ -190,106 +222,6 @@
         .btn-secondary:hover {
             border-color: var(--secondary);
             background: rgba(0, 180, 216, 0.1);
-        }
-
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Simulación de teléfono */
-        .phone-mockup {
-            width: 300px;
-            height: 600px;
-            background: #000;
-            border-radius: 40px;
-            border: 8px solid #1a1a2e;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 50px rgba(123, 44, 191, 0.4);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #1a0b2e 0%, #0b0f19 100%);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            position: relative;
-        }
-
-        .phone-screen::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1536240478700-b869070f9279?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover;
-            opacity: 0.4;
-            z-index: 0;
-        }
-
-        .timeline-mock {
-            position: absolute;
-            bottom: 80px;
-            left: 20px;
-            right: 20px;
-            height: 60px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            gap: 5px;
-            z-index: 2;
-        }
-
-        .timeline-block {
-            height: 40px;
-            border-radius: 5px;
-            flex: 1;
-        }
-
-        .tb-1 { background: var(--primary); }
-        .tb-2 { background: var(--secondary); }
-        .tb-3 { background: var(--accent); }
-
-        .play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-            border: 2px solid white;
-            z-index: 3;
-            cursor: pointer;
-        }
-
-        .play-btn::after {
-            content: '';
-            border-left: 15px solid white;
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-            margin-left: 5px;
         }
 
         /* --- FEATURES SECTION --- */
@@ -401,22 +333,17 @@
 
         /* --- RESPONSIVE --- */
         @media (max-width: 968px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding-top: 120px;
-            }
             .hero-title { font-size: 3rem; }
-            .hero-content { margin-bottom: 60px; }
-            .cta-group { justify-content: center; }
             .nav-links { display: none; }
-            .phone-mockup { width: 250px; height: 500px; }
+            .hero-banner { max-width: 100%; }
         }
 
         @media (max-width: 480px) {
             .hero-title { font-size: 2.2rem; }
             .cta-group { flex-direction: column; }
             .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+            .logo-text { font-size: 1.2rem; }
+            .logo-img { height: 30px; }
         }
     </style>
 </head>
@@ -427,9 +354,11 @@
 
     <!-- Navegación -->
     <nav>
-        <div class="logo">
-            ✂️ Video<span>Editor</span>
-        </div>
+        <a href="#" class="logo-container">
+            <!-- Aquí va tu logo -->
+            <img src="logo_edit.png" alt="Logo VideoEditor" class="logo-img">
+            <span class="logo-text">VideoEditor</span>
+        </a>
         <div class="nav-links">
             <a href="#features">Características</a>
             <a href="#stats">Comunidad</a>
@@ -439,6 +368,11 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <!-- Aquí va tu banner -->
+        <div class="hero-banner">
+            <img src="barnet-edit.png" alt="Video Editor Banner - Crea, Edita y Comparte">
+        </div>
+        
         <div class="hero-content">
             <h1 class="hero-title">VIDEO <span>EDITOR</span></h1>
             <p class="hero-subtitle">
@@ -448,18 +382,6 @@
             <div class="cta-group">
                 <button class="btn-primary">Descargar Ahora</button>
                 <button class="btn-secondary">Ver Demo</button>
-            </div>
-        </div>
-        <div class="hero-image">
-            <div class="phone-mockup">
-                <div class="phone-screen">
-                    <div class="play-btn"></div>
-                    <div class="timeline-mock">
-                        <div class="timeline-block tb-1"></div>
-                        <div class="timeline-block tb-2"></div>
-                        <div class="timeline-block tb-3"></div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -533,7 +455,7 @@
     </footer>
 
     <script>
-        // Pequeño script para efecto de scroll suave en los enlaces
+        // Efecto de scroll suave
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -543,10 +465,8 @@
             });
         });
 
-        // Efecto de aparición al hacer scroll (Simple)
-        const observerOptions = {
-            threshold: 0.1
-        };
+        // Efecto de aparición al hacer scroll
+        const observerOptions = { threshold: 0.1 };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
