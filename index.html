@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VideoEditor Pro - Crea, Edita y Comparte</title>
     <meta name="description" content="La mejor app para editar videos. Gratis, potente y fácil de usar. Turn your ideas into amazing videos.">
+    
+    <!-- META TAGS PARA COMPARTIR EN REDES SOCIALES (Open Graph) -->
+    <meta property="og:title" content="VideoEditor Pro - Crea, Edita y Comparte">
+    <meta property="og:description" content="La mejor app para editar videos. Gratis, sin marcas de agua y en HD/4K.">
+    <meta property="og:image" content="barnet-edit.png">
+    <meta property="og:url" content="https://maxstudiotoken.github.io/EditVideoFree/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VideoEditor Pro - Crea, Edita y Comparte">
+    <meta name="twitter:description" content="La mejor app para editar videos. Gratis, sin marcas de agua y en HD/4K.">
+    <meta name="twitter:image" content="barnet-edit.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         /* --- VARIABLES Y RESET --- */
@@ -20,7 +32,7 @@
             --glass-border: rgba(255, 255, 255, 0.1);
             --facebook: #1877F2;
             --instagram: #E4405F;
-            --x-color: #ffffff;
+            --x-color: #000000;
         }
 
         * {
@@ -352,6 +364,89 @@
             font-size: 1.1rem;
         }
 
+        /* --- SECCIÓN DE COMPARTIR --- */
+        .share-section {
+            padding: 100px 5%;
+            text-align: center;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: white;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .share-btn.fb {
+            background: var(--facebook);
+        }
+        .share-btn.fb:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(24, 119, 242, 0.5);
+        }
+
+        .share-btn.ig {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+        .share-btn.ig:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(228, 64, 95, 0.5);
+        }
+
+        .share-btn.x {
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .share-btn.x:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.3);
+            background: #1a1a1a;
+        }
+
+        .share-btn .icon {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        /* --- NOTIFICACIÓN TOAST --- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--gradient);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(123, 44, 191, 0.5);
+            transition: transform 0.4s ease;
+            z-index: 2000;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
         /* --- FOOTER --- */
         footer {
             padding: 50px 5%;
@@ -366,6 +461,7 @@
             display: flex;
             justify-content: center;
             gap: 20px;
+            margin-top: 20px;
         }
 
         .social-links a {
@@ -373,19 +469,21 @@
             text-decoration: none;
             font-size: 1.5rem;
             transition: color 0.3s, transform 0.3s;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             width: 45px;
             height: 45px;
-            line-height: 45px;
             border-radius: 50%;
             background: rgba(255,255,255,0.05);
             border: 1px solid var(--glass-border);
+            cursor: pointer;
         }
 
         .social-links a:hover { transform: scale(1.2); }
         .social-links a.fb:hover { color: var(--facebook); border-color: var(--facebook); }
         .social-links a.ig:hover { color: var(--instagram); border-color: var(--instagram); }
-        .social-links a.x:hover { color: var(--x-color); border-color: var(--x-color); }
+        .social-links a.x:hover { color: var(--x-color); border-color: var(--x-color); background: #ffffff; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 968px) {
@@ -403,6 +501,7 @@
             .logo-img { height: 30px; }
             nav { justify-content: center; }
             .lang-selector { margin: 0; }
+            .share-btn { width: 100%; max-width: 300px; }
         }
     </style>
 </head>
@@ -418,7 +517,6 @@
             <span class="logo-text">VideoEditor</span>
         </a>
 
-        <!-- SELECTOR DE IDIOMAS CON BANDERAS -->
         <div class="lang-selector">
             <button class="lang-btn active" onclick="changeLang('es', event)" title="Español">🇪🇸</button>
             <button class="lang-btn" onclick="changeLang('en', event)" title="English">🇬🇧</button>
@@ -430,8 +528,9 @@
 
         <div class="nav-links">
             <a href="#features" data-i18n="nav_features">Características</a>
+            <a href="#compartir" data-i18n="nav_share">Compartir</a>
         </div>
-        <a href="#comprar" class="btn-nav" data-i18n="nav_download">Descargar Gratis</a>
+        <a href="#features" class="btn-nav" data-i18n="nav_download">Descargar Gratis</a>
     </nav>
 
     <!-- Hero Section -->
@@ -447,7 +546,7 @@
                 <span data-i18n="hero_desc">Crea, edita y comparte. La herramienta más potente y sencilla para todos.</span>
             </p>
             <div class="cta-group">
-                <a href="#comprar" class="btn-primary" data-i18n="btn_download">Descargar Ahora</a>
+                <a href="#compartir" class="btn-primary" data-i18n="btn_download">Descargar Ahora</a>
                 <button class="btn-secondary" data-i18n="btn_demo">Ver Demo</button>
             </div>
         </div>
@@ -510,38 +609,45 @@
         </div>
     </section>
 
-    <!-- SECCIÓN DE COMPRA / CONTACTO (Facebook, Instagram y X) -->
-    <section class="features" id="comprar" style="padding-top: 50px;">
-        <h2 class="section-title" data-i18n="buy_title">¿Listo para <span>comprar o contactar?</span></h2>
-        <p style="color: var(--text-muted); margin-bottom: 40px; font-size: 1.1rem; max-width: 700px; margin-left: auto; margin-right: auto;" data-i18n="buy_desc">
-            Escríbenos por nuestras redes sociales para adquirir la versión completa o resolver tus dudas.
+    <!-- SECCIÓN DE COMPARTIR -->
+    <section class="share-section" id="compartir">
+        <h2 class="section-title" data-i18n="share_title">¡Comparte <span>VideoEditor Pro</span> con el mundo!</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 1.1rem; max-width: 700px; margin-left: auto; margin-right: auto;" data-i18n="share_desc">
+            Ayúdanos a llegar a más creadores. Comparte esta página en tus redes sociales con un solo clic.
         </p>
         
-        <div class="cta-group">
-            <!-- Facebook -->
-            <a href="https://facebook.com/VideoEditorPro" target="_blank" class="btn-primary" style="background: var(--facebook);">
-                <span>📘</span> <span data-i18n="buy_fb">Facebook</span>
+        <div class="share-buttons">
+            <!-- COMPARTIR EN FACEBOOK -->
+            <a href="#" onclick="shareOnFacebook(event)" class="share-btn fb">
+                <span class="icon">📘</span>
+                <span data-i18n="share_fb">Compartir en Facebook</span>
             </a>
 
-            <!-- Instagram -->
-            <a href="https://instagram.com/videoeditor.pro" target="_blank" class="btn-primary" style="background: var(--instagram);">
-                <span>📸</span> <span data-i18n="buy_ig">Instagram</span>
+            <!-- COMPARTIR EN X (TWITTER) -->
+            <a href="#" onclick="shareOnX(event)" class="share-btn x">
+                <span class="icon">𝕏</span>
+                <span data-i18n="share_x">Compartir en X</span>
             </a>
 
-            <!-- X (Twitter) -->
-            <a href="https://x.com/VideoEditorPro" target="_blank" class="btn-primary" style="background: #000000; border: 1px solid #ffffff;">
-                <span>𝕏</span> <span data-i18n="buy_x">X (Twitter)</span>
+            <!-- COMPARTIR EN INSTAGRAM (COPIA ENLACE) -->
+            <a href="#" onclick="shareOnInstagram(event)" class="share-btn ig">
+                <span class="icon">📸</span>
+                <span data-i18n="share_ig">Compartir en Instagram</span>
             </a>
         </div>
     </section>
 
+    <!-- Toast de notificación -->
+    <div class="toast" id="toast" data-i18n="toast_copied">¡Enlace copiado! Pégalo en tu historia de Instagram 📸</div>
+
     <!-- Footer -->
     <footer>
         <p data-i18n="footer_text">&copy; 2024 VideoEditor Pro. Crea, Edita y Comparte. Todo es gratis.</p>
+        <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.7;" data-i18n="footer_share">Comparte esta web en tus redes 👇</p>
         <div class="social-links">
-            <a href="https://facebook.com/VideoEditorPro" target="_blank" class="fb" title="Facebook">📘</a>
-            <a href="https://instagram.com/videoeditor.pro" target="_blank" class="ig" title="Instagram">📸</a>
-            <a href="https://x.com/VideoEditorPro" target="_blank" class="x" title="X (Twitter)">𝕏</a>
+            <a href="#" onclick="shareOnFacebook(event)" class="fb" title="Compartir en Facebook">📘</a>
+            <a href="#" onclick="shareOnX(event)" class="x" title="Compartir en X">𝕏</a>
+            <a href="#" onclick="shareOnInstagram(event)" class="ig" title="Compartir en Instagram">📸</a>
         </div>
     </footer>
 
@@ -550,6 +656,7 @@
         const translations = {
             es: {
                 nav_features: "Características",
+                nav_share: "Compartir",
                 nav_download: "Descargar Gratis",
                 hero_slogan: "Turn your ideas into amazing videos.",
                 hero_desc: "Crea, edita y comparte. La herramienta más potente y sencilla para todos.",
@@ -572,15 +679,18 @@
                 stat2: "Valoración Media",
                 stat3: "Gratis para Siempre",
                 stat4: "Soporte HD y Ultra HD",
-                buy_title: "¿Listo para <span>comprar o contactar?</span>",
-                buy_desc: "Escríbenos por nuestras redes sociales para adquirir la versión completa o resolver tus dudas.",
-                buy_fb: "Facebook",
-                buy_ig: "Instagram",
-                buy_x: "X (Twitter)",
-                footer_text: "&copy; 2024 VideoEditor Pro. Crea, Edita y Comparte. Todo es gratis."
+                share_title: "¡Comparte <span>VideoEditor Pro</span> con el mundo!",
+                share_desc: "Ayúdanos a llegar a más creadores. Comparte esta página en tus redes sociales con un solo clic.",
+                share_fb: "Compartir en Facebook",
+                share_x: "Compartir en X",
+                share_ig: "Compartir en Instagram",
+                toast_copied: "¡Enlace copiado! Pégalo en tu historia de Instagram 📸",
+                footer_text: "&copy; 2024 VideoEditor Pro. Crea, Edita y Comparte. Todo es gratis.",
+                footer_share: "Comparte esta web en tus redes 👇"
             },
             en: {
                 nav_features: "Features",
+                nav_share: "Share",
                 nav_download: "Download Free",
                 hero_slogan: "Turn your ideas into amazing videos.",
                 hero_desc: "Create, edit, and share. The most powerful and simple tool for everyone.",
@@ -603,15 +713,18 @@
                 stat2: "Average Rating",
                 stat3: "Free Forever",
                 stat4: "HD & Ultra HD Support",
-                buy_title: "Ready to <span>buy or contact?</span>",
-                buy_desc: "Message us on our social media to get the full version or ask your questions.",
-                buy_fb: "Facebook",
-                buy_ig: "Instagram",
-                buy_x: "X (Twitter)",
-                footer_text: "&copy; 2024 VideoEditor Pro. Create, Edit, Share. Everything is free."
+                share_title: "Share <span>VideoEditor Pro</span> with the world!",
+                share_desc: "Help us reach more creators. Share this page on your social media with one click.",
+                share_fb: "Share on Facebook",
+                share_x: "Share on X",
+                share_ig: "Share on Instagram",
+                toast_copied: "Link copied! Paste it in your Instagram story 📸",
+                footer_text: "&copy; 2024 VideoEditor Pro. Create, Edit, Share. Everything is free.",
+                footer_share: "Share this site on your social media 👇"
             },
             fr: {
                 nav_features: "Caractéristiques",
+                nav_share: "Partager",
                 nav_download: "Télécharger Gratuit",
                 hero_slogan: "Turn your ideas into amazing videos.",
                 hero_desc: "Créez, éditez et partagez. L'outil le plus puissant et le plus simple pour tous.",
@@ -634,15 +747,18 @@
                 stat2: "Note Moyenne",
                 stat3: "Gratuit pour Toujours",
                 stat4: "Support HD & Ultra HD",
-                buy_title: "Prêt à <span>acheter ou contacter ?</span>",
-                buy_desc: "Écrivez-nous sur nos réseaux sociaux pour obtenir la version complète ou poser vos questions.",
-                buy_fb: "Facebook",
-                buy_ig: "Instagram",
-                buy_x: "X (Twitter)",
-                footer_text: "&copy; 2024 VideoEditor Pro. Créez, Éditez, Partagez. Tout est gratuit."
+                share_title: "Partagez <span>VideoEditor Pro</span> avec le monde !",
+                share_desc: "Aidez-nous à toucher plus de créateurs. Partagez cette page sur vos réseaux sociaux en un clic.",
+                share_fb: "Partager sur Facebook",
+                share_x: "Partager sur X",
+                share_ig: "Partager sur Instagram",
+                toast_copied: "Lien copié ! Collez-le dans votre story Instagram 📸",
+                footer_text: "&copy; 2024 VideoEditor Pro. Créez, Éditez, Partagez. Tout est gratuit.",
+                footer_share: "Partagez ce site sur vos réseaux 👇"
             },
             zh: {
                 nav_features: "功能",
+                nav_share: "分享",
                 nav_download: "免费下载",
                 hero_slogan: "Turn your ideas into amazing videos.",
                 hero_desc: "创作、编辑和分享。为所有人打造的最强大、最简单的工具。",
@@ -665,15 +781,18 @@
                 stat2: "平均评分",
                 stat3: "永久免费",
                 stat4: "支持高清与超高清",
-                buy_title: "准备<span>购买或联系？</span>",
-                buy_desc: "通过我们的社交媒体联系我们，获取完整版或解答您的疑问。",
-                buy_fb: "Facebook",
-                buy_ig: "Instagram",
-                buy_x: "X (Twitter)",
-                footer_text: "&copy; 2024 VideoEditor Pro. 创作、编辑、分享。一切免费。"
+                share_title: "与世界分享 <span>VideoEditor Pro</span>！",
+                share_desc: "帮助我们触达更多创作者。一键将此页面分享到您的社交媒体。",
+                share_fb: "分享到 Facebook",
+                share_x: "分享到 X",
+                share_ig: "分享到 Instagram",
+                toast_copied: "链接已复制！粘贴到你的 Instagram 故事中 📸",
+                footer_text: "&copy; 2024 VideoEditor Pro. 创作、编辑、分享。一切免费。",
+                footer_share: "在社交媒体上分享此网站 👇"
             },
             ru: {
                 nav_features: "Функции",
+                nav_share: "Поделиться",
                 nav_download: "Скачать Бесплатно",
                 hero_slogan: "Turn your ideas into amazing videos.",
                 hero_desc: "Создавайте, редактируйте и делитесь. Самый мощный и простой инструмент для всех.",
@@ -696,15 +815,18 @@
                 stat2: "Средний Рейтинг",
                 stat3: "Бесплатно Навсегда",
                 stat4: "Поддержка HD и Ultra HD",
-                buy_title: "Готовы <span>купить или связаться?</span>",
-                buy_desc: "Напишите нам в социальных сетях, чтобы получить полную версию или задать вопросы.",
-                buy_fb: "Facebook",
-                buy_ig: "Instagram",
-                buy_x: "X (Twitter)",
-                footer_text: "&copy; 2024 VideoEditor Pro. Создавай, Редактируй, Делись. Все бесплатно."
+                share_title: "Поделитесь <span>VideoEditor Pro</span> со всем миром!",
+                share_desc: "Помогите нам охватить больше создателей. Поделитесь этой страницей в соцсетях в один клик.",
+                share_fb: "Поделиться в Facebook",
+                share_x: "Поделиться в X",
+                share_ig: "Поделиться в Instagram",
+                toast_copied: "Ссылка скопирована! Вставьте её в свою историю Instagram 📸",
+                footer_text: "&copy; 2024 VideoEditor Pro. Создавай, Редактируй, Делись. Все бесплатно.",
+                footer_share: "Поделитесь этим сайтом в соцсетях 👇"
             },
             pt: {
                 nav_features: "Recursos",
+                nav_share: "Compartilhar",
                 nav_download: "Baixar Grátis",
                 hero_slogan: "Turn your ideas into amazing videos.",
                 hero_desc: "Crie, edite e compartilhe. A ferramenta mais poderosa e simples para todos.",
@@ -727,12 +849,14 @@
                 stat2: "Avaliação Média",
                 stat3: "Grátis para Sempre",
                 stat4: "Suporte HD & Ultra HD",
-                buy_title: "Pronto para <span>comprar ou contatar?</span>",
-                buy_desc: "Envie-nos uma mensagem nas redes sociais para obter a versão completa ou tirar dúvidas.",
-                buy_fb: "Facebook",
-                buy_ig: "Instagram",
-                buy_x: "X (Twitter)",
-                footer_text: "&copy; 2024 VideoEditor Pro. Crie, Edite, Compartilhe. Tudo é grátis."
+                share_title: "Compartilhe o <span>VideoEditor Pro</span> com o mundo!",
+                share_desc: "Ajude-nos a alcançar mais criadores. Compartilhe esta página nas suas redes sociais com um clique.",
+                share_fb: "Compartilhar no Facebook",
+                share_x: "Compartilhar no X",
+                share_ig: "Compartilhar no Instagram",
+                toast_copied: "Link copiado! Cole no seu story do Instagram 📸",
+                footer_text: "&copy; 2024 VideoEditor Pro. Crie, Edite, Compartilhe. Tudo é grátis.",
+                footer_share: "Compartilhe este site nas suas redes 👇"
             }
         };
 
@@ -761,6 +885,90 @@
             localStorage.setItem('preferredLang', lang);
         }
 
+        // --- FUNCIONES DE COMPARTIR ---
+
+        // Obtener la URL actual de la página automáticamente
+        function getPageUrl() {
+            return window.location.href;
+        }
+
+        // Mensaje personalizado que aparecerá al compartir
+        function getShareMessage() {
+            const lang = localStorage.getItem('preferredLang') || 'es';
+            const messages = {
+                es: "¡Mira esta app para editar videos! Es 100% gratis y sin marcas de agua 🎬✨",
+                en: "Check out this video editing app! It's 100% free and no watermarks 🎬✨",
+                fr: "Découvrez cette app d'édition vidéo ! 100% gratuite et sans filigrane 🎬✨",
+                zh: "快来看看这个视频编辑应用！100% 免费，无水印 🎬✨",
+                ru: "Посмотрите это приложение для редактирования видео! 100% бесплатно и без водяных знаков 🎬✨",
+                pt: "Olha esse app de edição de vídeo! 100% grátis e sem marca d'água 🎬✨"
+            };
+            return messages[lang] || messages.es;
+        }
+
+        // COMPARTIR EN FACEBOOK
+        function shareOnFacebook(e) {
+            e.preventDefault();
+            const url = encodeURIComponent(getPageUrl());
+            const quote = encodeURIComponent(getShareMessage());
+            const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`;
+            window.open(shareUrl, '_blank', 'width=600,height=500');
+        }
+
+        // COMPARTIR EN X (TWITTER)
+        function shareOnX(e) {
+            e.preventDefault();
+            const url = encodeURIComponent(getPageUrl());
+            const text = encodeURIComponent(getShareMessage());
+            const shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+            window.open(shareUrl, '_blank', 'width=600,height=500');
+        }
+
+        // COMPARTIR EN INSTAGRAM (COPIA EL ENLACE AL PORTAPAPELES)
+        // Instagram NO permite compartir enlaces directamente desde una web.
+        // La solución estándar es copiar el enlace y avisar al usuario.
+        function shareOnInstagram(e) {
+            e.preventDefault();
+            const url = getPageUrl();
+            
+            // Copiar al portapapeles
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast();
+                }).catch(() => {
+                    fallbackCopy(url);
+                });
+            } else {
+                fallbackCopy(url);
+            }
+        }
+
+        // Método alternativo para copiar (para navegadores antiguos)
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                alert('Copia este enlace: ' + text);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // Mostrar la notificación toast
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
         // --- INICIALIZACIÓN ---
         document.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('preferredLang');
@@ -772,8 +980,10 @@
         // --- EFECTOS DE SCROLL ---
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const target = document.querySelector(href);
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
