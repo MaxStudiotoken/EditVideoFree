@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VideoEditor Pro - Crea, Edita y Comparte</title>
+    
+    <!-- FAVICON (Icono de la pestaña del navegador) -->
+    <link rel="icon" type="image/png" href="logo_edit.png">
+    
     <meta name="description" content="La mejor app para editar videos. Gratis, potente y fácil de usar. Turn your ideas into amazing videos.">
     
     <!-- META TAGS PARA COMPARTIR EN REDES SOCIALES (Open Graph) -->
@@ -887,12 +891,10 @@
 
         // --- FUNCIONES DE COMPARTIR ---
 
-        // Obtener la URL actual de la página automáticamente
         function getPageUrl() {
             return window.location.href;
         }
 
-        // Mensaje personalizado que aparecerá al compartir
         function getShareMessage() {
             const lang = localStorage.getItem('preferredLang') || 'es';
             const messages = {
@@ -906,7 +908,6 @@
             return messages[lang] || messages.es;
         }
 
-        // COMPARTIR EN FACEBOOK
         function shareOnFacebook(e) {
             e.preventDefault();
             const url = encodeURIComponent(getPageUrl());
@@ -915,7 +916,6 @@
             window.open(shareUrl, '_blank', 'width=600,height=500');
         }
 
-        // COMPARTIR EN X (TWITTER)
         function shareOnX(e) {
             e.preventDefault();
             const url = encodeURIComponent(getPageUrl());
@@ -924,14 +924,10 @@
             window.open(shareUrl, '_blank', 'width=600,height=500');
         }
 
-        // COMPARTIR EN INSTAGRAM (COPIA EL ENLACE AL PORTAPAPELES)
-        // Instagram NO permite compartir enlaces directamente desde una web.
-        // La solución estándar es copiar el enlace y avisar al usuario.
         function shareOnInstagram(e) {
             e.preventDefault();
             const url = getPageUrl();
             
-            // Copiar al portapapeles
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(url).then(() => {
                     showToast();
@@ -943,7 +939,6 @@
             }
         }
 
-        // Método alternativo para copiar (para navegadores antiguos)
         function fallbackCopy(text) {
             const textarea = document.createElement('textarea');
             textarea.value = text;
@@ -960,7 +955,6 @@
             document.body.removeChild(textarea);
         }
 
-        // Mostrar la notificación toast
         function showToast() {
             const toast = document.getElementById('toast');
             toast.classList.add('show');
